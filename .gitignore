@@ -1,3 +1,7 @@
 # Ignore all SQLite databases
 db/*.sqlite3
 .DS_Store
+
+# Attempt at ignoring .pylintrc file
+.pylintrc
+
