@@ -1,6 +1,11 @@
 import random
 
-VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"]
+VALID_CHOICES = {"rock":    ["r", "ro", "roc"],
+                "paper":    ["p", "pa", "pap", "pape"],
+                "scissors": ["s", "sc", "sci", "scis"],
+                "lizard":   ["l", "li", "liz", "liza", "lizar"],
+                "spock":    ["sp", "spo", "spoc", ],
+}
 
 WINNING_COMBOS = {
     "rock":      ["scissors", "lizard"],
@@ -12,14 +17,6 @@ WINNING_COMBOS = {
 
 def prompt(message):
     print(f"==> {message}")
-
-def welcome():
-    prompt("""Welcome to Python Rock Paper Scissors: Big Bang Edition :D\n
-    This game introduces two new options: 'spock' and lizard'.\n
-    With these new options: Scissors cuts Paper, Paper covers Rock.\n
-    Rock crushes Lizard, Lizard poisons Spock, Spock smashes Scissors.\n
-    Scissors decapitates Lizard, Lizard eats Paper, Paper disproves Spock.\n
-    Spock vaporizes Rock, and Rock crushes Scissors. First to 3 wins :D\n""")
 
 def get_player_choice():
     prompt(f"Choose one: {", ".join(VALID_CHOICES)}:")
@@ -58,6 +55,14 @@ def play_again():
 
     return answer[0] == "n"
 
+def welcome():
+    prompt("""Welcome to Python Rock Paper Scissors: Big Bang Edition :D\n
+    This game introduces two new options: 'spock' and lizard'.\n
+    With these new options: Scissors cuts Paper, Paper covers Rock.\n
+    Rock crushes Lizard, Lizard poisons Spock, Spock smashes Scissors.\n
+    Scissors decapitates Lizard, Lizard eats Paper, Paper disproves Spock.\n
+    Spock vaporizes Rock, and Rock crushes Scissors. First to 3 wins :D\n""")
+
 def main():
     player_score = 0
     computer_score = 0
@@ -68,7 +73,7 @@ def main():
     while running:
         choice = get_player_choice()
 
-        computer_choice = random.choice(VALID_CHOICES)
+        computer_choice = random.choice(list(VALID_CHOICES.keys()))
 
         prompt(f"You chose {choice}, CPU chose {computer_choice}.")
 
