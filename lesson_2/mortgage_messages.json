@@ -1,0 +1,11 @@
+{
+    "welcome": "Welcome to Python Mortgage Calculator :D",
+    "loan_prompt": "Please enter the loan amount in dollars:",
+    "valid_positive": "Please enter only positive numbers",
+    "interest_prompt": "Please enter the interest rate:\nExample: 5 for 5% or 2.5 for 2.5%)",
+    "valid_loan": "Please don't enter a negative number",
+    "valid_length": "Please enter the loan term in months:",
+    "starts_with": "Please enter 'y' or 'n'",
+    "another_calc": "Would you like to make another calculation? (y, n)",
+    "bye": "Goodbye :D"
+}
