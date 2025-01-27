@@ -1,6 +1,7 @@
 import random
 
 VALID_CHOICES = ["rock", "paper", "scissors", "lizard", "spock"]
+ALT_CHOICES = ["r", "p", "s", "l", "sp"]
 
 WINNING_COMBOS = {
     "rock":      ["scissors", "lizard"],
@@ -23,28 +24,53 @@ def welcome():
 
 def get_player_choice():
     prompt(f"Choose one: {", ".join(VALID_CHOICES)}:")
-    choice = input()
-
-    while choice not in VALID_CHOICES:
-        prompt("That's not a valid choice")
+    while True:
         choice = input()
 
-    return choice
+        if choice in ALT_CHOICES:
+            choice = fix_choice(choice)
 
-def determine_winner(player, computer):
-    if computer in WINNING_COMBOS[player]:
+        if choice not in VALID_CHOICES:
+            prompt("Not a valid choice")
+        else:
+            return choice
+
+def fix_choice(selection):
+    position = ALT_CHOICES.index(selection)
+    return VALID_CHOICES[position]
+
+def determine_winner(player_choice, computer_choice):
+    if computer_choice in WINNING_COMBOS[player_choice]:
+        prompt("You win :D")
         return "win"
-    if player == computer:
+    if player_choice == computer_choice:
+        prompt("You tie :/")
         return "tie"
 
+    prompt("You lose D:")
     return "lose"
 
-def display_round_winner(p_score):
-    prompt("Round Over")
+def create_new_scores(result, player_score, computer_score):
+    match result:
+        case "win":
+            return {
+                "player_score": player_score + 1, 
+                "computer_score": computer_score}
+        case "tie":
+            return {
+                "player_score": player_score, 
+                "computer_score": computer_score}
+        case "lose":
+            return {
+                "player_score": player_score, 
+                "computer_score": computer_score + 1}
+
+def display_game_winner(p_score):
+    prompt("Game Over")
     if p_score == 3:
-        prompt("You won the round :)")
+        prompt("You won the game :)")
     else:
-        prompt("You lost the round ):")
+        prompt("You lost the game ):")
 
 def play_again():
     prompt("Would you like to play again? (y/n):")
@@ -56,7 +82,7 @@ def play_again():
         prompt("Please enter 'y' or 'n':")
         answer = input().lower()
 
-    return answer[0] == "n"
+    return answer.startswith("n")
 
 def main():
     player_score = 0
@@ -74,26 +100,20 @@ def main():
 
         result = determine_winner(choice, computer_choice)
 
-        match result:
-            case "win":
-                prompt("You win :D")
-                player_score += 1
-            case "tie":
-                prompt("You tie :/")
-            case "lose":
-                prompt("You lose D:")
-                computer_score += 1
+        new_scores = create_new_scores(result, player_score, computer_score)
+        player_score = new_scores["player_score"]
+        computer_score = new_scores["computer_score"]
 
         prompt(f"Player score: {player_score}. CPU score: {computer_score}")
 
         if player_score == 3 or computer_score == 3:
-            display_round_winner(player_score)
+            display_game_winner(player_score)
 
             player_score = 0
             computer_score = 0
 
             if play_again():
-                prompt("Thanks for playing :D")
+                prompt("Thanks for playing <3")
                 running = False
 
 main()
