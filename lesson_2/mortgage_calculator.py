@@ -9,7 +9,7 @@ def messages(message):
 def prompt(message):
     print(f"==> {message}")
 
-def invalid_number(number_str):
+def invalid_loan(number_str):
     try:
         number = float(number_str)
         if number <= 0:
@@ -19,7 +19,17 @@ def invalid_number(number_str):
 
     return False
 
-def valid_loan(number_str):
+def invalid_monthly_payment(number_str):
+    try:
+        number = int(number_str)
+        if number <= 0:
+            raise ValueError
+    except ValueError:
+        return True
+    
+    return False
+
+def valid_interest(number_str):
     try:
         number = float(number_str)
         if number < 0:
@@ -33,7 +43,7 @@ def get_loan():
     prompt(messages("loan_prompt"))
     loan_amount = input()
 
-    while invalid_number(loan_amount):
+    while invalid_loan(loan_amount):
         prompt(messages("valid_positive"))
         loan_amount = input()
 
@@ -44,7 +54,7 @@ def get_interest():
     prompt(messages("interest_prompt"))
     interest_rate = input()
 
-    while valid_loan(interest_rate):
+    while valid_interest(interest_rate):
         prompt(messages("valid_loan"))
         interest_rate = input()
 
@@ -54,8 +64,8 @@ def get_loan_term():
     prompt(messages("valid_length"))
     loan_duration = input()
 
-    while invalid_number(loan_duration):
-        prompt(messages("valid_positive"))
+    while invalid_monthly_payment(loan_duration):
+        prompt(messages("valid_length"))
         loan_duration = input()
 
     return loan_duration
